@@ -2,14 +2,16 @@ import SwiftUI
 
 @main
 struct FeedFlowApp: App {
-    @State private var selectedFeed: Feed?
+    // Initialize selectedFeed with Swift News
+    @State private var selectedFeed: Feed? = MockData.feeds[0]
     @State private var selectedArticle: Article?
 
     // Add this computed property to filter articles based on selected feed
     private var currentArticles: [Article] {
-        // For now, just return all articles since we're using mock data
-        // In a real app, you would filter based on selectedFeed
-        MockData.articles
+        if let selectedFeed = selectedFeed {
+            return MockData.articles(for: selectedFeed)
+        }
+        return MockData.articles
     }
 
     var body: some Scene {

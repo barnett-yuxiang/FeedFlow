@@ -6,8 +6,13 @@ struct SidebarView: View {
 
     var body: some View {
         List(feeds, selection: $selectedFeed) { feed in
-            Text(feed.title)
-                .tag(feed) // Add this line to make items selectable
+            HStack {
+                Image(systemName: "newspaper.fill")
+                    .foregroundColor(.accentColor)
+                Text(feed.title)
+            }
+            .tag(feed)
         }
+        .listStyle(SidebarListStyle()) // 使用系统侧边栏样式
     }
 }
