@@ -19,6 +19,9 @@ struct FeedFlowApp: App {
             NavigationSplitView {
                 SidebarView(selectedFeed: $selectedFeed, feeds: MockData.feeds)
                     .frame(minWidth: 200)
+                    .onAppear {
+                        AppLogger.shared.info("Sidebar view appeared")
+                    }
             } content: {
                 ArticleListView(selectedArticle: $selectedArticle, articles: currentArticles)
                     .frame(minWidth: 300)
@@ -26,18 +29,25 @@ struct FeedFlowApp: App {
                 if let article = selectedArticle {
                     ArticleDetailView(article: article)
                         .frame(minWidth: 400)
+                        .onAppear {
+                            AppLogger.shared.info("Showing article: \(article.title)")
+                        }
                 } else {
                     Text("Select an article")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             .navigationTitle("FeedFlow")
+            .onAppear {
+                AppLogger.shared.info("Application started")
+            }
         }
         .windowStyle(.titleBar)
         .windowResizability(.contentSize)
         .onChange(of: scenePhase) { oldPhase, newPhase in
             switch newPhase {
             case .background:
+                AppLogger.shared.info("Application entering background")
                 selectedArticle = nil
                 selectedFeed = nil
                 DispatchQueue.main.async {
