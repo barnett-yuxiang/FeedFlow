@@ -7,6 +7,7 @@ struct SidebarView: View {
     var body: some View {
         List(feeds, selection: $selectedFeed) { feed in
             Text(feed.title)
+                .tag(feed) // Add this line to make items selectable
         }
     }
 }

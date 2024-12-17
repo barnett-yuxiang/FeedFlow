@@ -16,6 +16,7 @@ struct ArticleListView: View {
                     .font(.caption)
             }
             .padding(.vertical, 4)
+            .tag(article) // Add this line to make items selectable
         }
     }
 }
